@@ -8,6 +8,9 @@
     },
     {
       "path": "pages/discriminate/manual-classification/manual-classification"
+    },
+    {
+      "path": "pages/discriminate/my-card/my-card"
     }
   ],
   "globalStyle": {
