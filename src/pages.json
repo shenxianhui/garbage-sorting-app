@@ -2,9 +2,11 @@
   "pages": [
     {
       "path": "pages/home/home",
-      "style": {
-        "navigationBarTitleText": "首页"
-      }
+      "style": {}
+    },
+    {
+      "path": "pages/discriminate/discriminate",
+      "style": {}
     }
   ],
   "globalStyle": {

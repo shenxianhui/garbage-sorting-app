@@ -2,27 +2,9 @@
 export default {
   // 全局变量
   globalData: {
-    userAppInfo: {}, // 用户信息-小程序
-    userStoreInfo: {}, // 用户信息-店铺
+    userInfo: {}, // 用户信息
     provider: 'weixin', // 服务提供商
-    userCode: '', // 小程序专有，用户登录凭证
-    // 购物车
-    shoppingCart: [
-      // {
-      //   name: '电子产品',
-      //   value: 'electronic-product',
-      //   checked: true,
-      //   children: [
-      //     {
-      //       name: '手机',
-      //       value: 'phone',
-      //       checked: true,
-      //       quantity: 1,
-      //       price: 2999
-      //     }
-      //   ]
-      // }
-    ]
+    userCode: '' // 小程序专有，用户登录凭证
   },
   onLaunch() {
     uni.getProvider({
@@ -34,9 +16,7 @@ export default {
       }
     });
   },
-  onShow(data) {
-    console.log(data);
-  },
+  onShow() {},
   onHide() {},
   onError() {},
 
@@ -68,6 +48,7 @@ page {
   height: 100vh;
   background: $xx-bg-color;
   font-size: $xx-font-size-base;
+  overflow: hidden;
 }
 view,
 scroll-view {
