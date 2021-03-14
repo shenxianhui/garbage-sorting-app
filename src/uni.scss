@@ -1,0 +1,60 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+
+@import 'uview-ui/theme.scss';
+
+/* 主题颜色 */
+$xx-color-red: #fe3b00;
+$xx-color-yellow: #ecc100;
+$xx-color-lightyellow: #fff48e;
+$xx-color-lightblue: #a1c4fd;
+
+/* 行为相关颜色 */
+$xx-color-primary: #007aff;
+$xx-color-success: #4cd964;
+$xx-color-warning: #f0ad4e;
+$xx-color-error: #dd524d;
+
+/* 文字基本颜色 */
+$xx-text-color: #333; // 基本色
+$xx-text-color-inverse: #fff; // 反色
+$xx-text-color-grey: #999; // 辅助灰色，如加载更多的提示信息
+$xx-text-color-grey-light: #ccc; // 浅灰
+$xx-text-color-placeholder: #808080;
+$xx-text-color-disable: #c0c0c0;
+
+/* 背景颜色 */
+$xx-bg-color: #fafafa;
+$xx-bg-color-grey: #efefef;
+$xx-bg-color-hover: #f1f1f1; // 点击状态颜色
+$xx-bg-color-mask: rgba(0, 0, 0, 0.4); // 遮罩颜色
+$xx-bg-color-input: #eee; // 输入框背景色
+
+/* 边框颜色 */
+$xx-border-color: #c8c7cc;
+
+/* 页面边距 */
+$xx-padding-page: 0 30rpx;
+
+/* 文字尺寸 */
+$xx-font-size-sm: 24rpx;
+$xx-font-size-base: 28rpx;
+$xx-font-size-lg: 32rpx;
+
+/* 超出内容显示省略号-单行 */
+.xx-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
