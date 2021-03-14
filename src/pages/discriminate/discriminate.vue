@@ -2,14 +2,14 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 14:26:49
+ * @LastEditTime: 2021-03-14 17:52:02
  * @Description: 识物
 -->
 
 <template>
   <view class="discriminate">
     <image class="discriminate-bg" src="@/static/img/discriminate_bg.png" />
-    <view class="scan" @click="handleScan()">扫一扫 学分类</view>
+    <view class="scan" @click="handleScan()">扫一扫&nbsp;&nbsp;学分类</view>
 
     <!-- 弹出框 -->
     <u-popup v-model="showPopup" mode="center" border-radius="14">
@@ -18,18 +18,22 @@
           <view class="popup-header-tag"></view>
           <view class="popup-header-title">
             <text>{{ garbageType[0].name }}</text>
-            <view class="icon"></view>
+            <image class="icon" :src="garbageType[0].icon" />
           </view>
         </view>
         <view class="popup-body">
-          <view class="goods-img"></view>
+          <view class="goods-img"> </view>
           <view class="line"></view>
-          <view class="remarks">
+          <view v-if="false" class="remarks">
             <view class="remarks-tit">
               <view class="remarks-tit-tag"></view>
               投放要求
             </view>
             <view class="remarks-info" v-html="garbageType[0].remarks"></view>
+          </view>
+          <view v-else class="learn">
+            <text>学习垃圾分类集卡牌</text>
+            <u-button class="btn" type="success" @click="handleType()">教教我</u-button>
           </view>
         </view>
       </view>
@@ -48,25 +52,25 @@ export default {
       garbageType: [
         {
           name: '干垃圾',
-          icon: '',
+          icon: require('@/static/icon/其他垃圾图标.png'),
           img: '',
           remarks: '禁止投放<br />禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放'
         },
         {
           name: '湿垃圾',
-          icon: '',
+          icon: require('@/static/icon/厨余垃圾标志.png'),
           img: '',
           remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
         },
         {
           name: '可回收垃圾',
-          icon: '',
+          icon: require('@/static/icon/可回收垃圾图标.png'),
           img: '',
           remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
         },
         {
           name: '有害垃圾',
-          icon: '',
+          icon: require('@/static/icon/有害垃圾标志.png'),
           img: '',
           remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
         }
@@ -90,6 +94,11 @@ export default {
           console.log(res.tempFilePaths);
         }
       });
+    },
+    handleType() {
+      uni.navigateTo({
+        url: `/pages/discriminate/manual-classification/manual-classification`
+      });
     }
   }
 };
@@ -105,18 +114,20 @@ export default {
   }
   .scan {
     position: absolute;
-    bottom: 100rpx;
+    bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0);
     text-align: center;
     width: 400rpx;
     height: 100rpx;
     line-height: 100rpx;
-    font-size: 32rpx;
-    background-color: #278c53;
+    font-size: 28rpx;
+    background: url('~@/static/img/button_bg.png') 0 0;
+    background-size: 100% 100%;
     color: #fff;
   }
   .popup-content {
+    width: 520rpx;
     .popup-header {
       background: #66cc66;
       color: #fff;
@@ -135,6 +146,11 @@ export default {
         font-size: 36rpx;
         height: 50rpx;
         padding: 0 10rpx;
+        .icon {
+          flex-shrink: 0;
+          width: 50rpx;
+          height: 50rpx;
+        }
       }
     }
     .popup-body {
@@ -168,9 +184,28 @@ export default {
         .remarks-info {
           font-size: 26rpx;
           margin-top: 10rpx;
-          width: 460rpx;
           padding: 0 20rpx;
           line-height: 1.5;
+        }
+      }
+      .learn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 250rpx;
+        padding: 40rpx 0;
+        .btn {
+          /deep/ button {
+            text-align: center;
+            width: 300rpx;
+            height: 80rpx;
+            background-color: #66cc66;
+            border-radius: 40rpx;
+            font-size: 34rpx;
+            line-height: 80rpx;
+            color: #fff;
+          }
         }
       }
     }

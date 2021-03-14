@@ -1,12 +1,13 @@
 {
   "pages": [
     {
-      "path": "pages/home/home",
-      "style": {}
+      "path": "pages/home/home"
     },
     {
-      "path": "pages/discriminate/discriminate",
-      "style": {}
+      "path": "pages/discriminate/discriminate"
+    },
+    {
+      "path": "pages/discriminate/manual-classification/manual-classification"
     }
   ],
   "globalStyle": {

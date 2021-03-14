@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 10:38:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 13:19:31
+ * @LastEditTime: 2021-03-14 17:48:46
  * @Description: 首页
 -->
 
@@ -10,9 +10,9 @@
   <view class="home">
     <image class="home-bg" src="@/static/img/home_bg.png" />
     <view class="button-group">
-      <view class="btn" @click="handleButton(1)">识物 学分类</view>
-      <view class="btn" @click="handleButton(2)">游戏 学分类</view>
-      <view class="btn" @click="handleButton(3)">我的成就</view>
+      <u-button class="btn" type="success" @click="handleButton(1)">识物 学分类</u-button>
+      <u-button class="btn" type="success" @click="handleButton(2)">游戏 学分类</u-button>
+      <u-button class="btn" type="success" @click="handleButton(3)">我的成就</u-button>
     </view>
   </view>
 </template>
@@ -58,20 +58,24 @@ export default {
   }
   .button-group {
     position: absolute;
-    bottom: 250rpx;
+    display: flex;
+    flex-direction: column;
+    bottom: 15%;
     left: 50%;
     transform: translate(-50%, 0);
     .btn {
-      text-align: center;
-      width: 400rpx;
-      height: 80rpx;
-      background-color: #278c53;
-      border-radius: 40rpx;
-      font-size: 34rpx;
-      line-height: 80rpx;
-      color: #fff;
       &:not(:last-child) {
         margin-bottom: 60rpx;
+      }
+      /deep/ button {
+        text-align: center;
+        width: 400rpx;
+        height: 80rpx;
+        background-color: #278c53;
+        border-radius: 40rpx;
+        font-size: 34rpx;
+        line-height: 80rpx;
+        color: #fff;
       }
     }
   }
