@@ -2,12 +2,13 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 17:52:02
+ * @LastEditTime: 2021-03-15 20:49:37
  * @Description: 识物
 -->
 
 <template>
   <view class="discriminate">
+    <text class="assignment">【今日任务】 至少包含2类垃圾, 去完成 ></text>
     <image class="discriminate-bg" src="@/static/img/discriminate_bg.png" />
     <view class="scan" @click="handleScan()">扫一扫&nbsp;&nbsp;学分类</view>
 
@@ -16,10 +17,10 @@
       <view class="popup-content">
         <view class="popup-header">
           <view class="popup-header-tag"></view>
-          <view class="popup-header-title">
+          <!-- <view class="popup-header-title">
             <text>{{ garbageType[0].name }}</text>
             <image class="icon" :src="garbageType[0].icon" />
-          </view>
+          </view> -->
         </view>
         <view class="popup-body">
           <view class="goods-img"> </view>
@@ -48,31 +49,35 @@ export default {
   props: {},
   data() {
     return {
-      showPopup: true,
+      showPopup: false,
       garbageType: [
         {
           name: '干垃圾',
           icon: require('@/static/icon/其他垃圾图标.png'),
           img: '',
-          remarks: '禁止投放<br />禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放禁止投放'
+          remarks:
+            '禁止混投。<br />其他垃圾应投入其他垃圾收集容器，并保持周边环境整洁。凡未列入本目录或成分复杂难以分辨类别的生活垃圾,投入其他垃圾收集容器。'
         },
         {
           name: '湿垃圾',
           icon: require('@/static/icon/厨余垃圾标志.png'),
           img: '',
-          remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
+          remarks:
+            '投放前尽量沥干水分。<br />有包装物的湿垃圾应将包装物去除后分类投放，包装物应投放到对应的可回收物或干垃圾收集容器。'
         },
         {
           name: '可回收垃圾',
           icon: require('@/static/icon/可回收垃圾图标.png'),
           img: '',
-          remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
+          remarks:
+            '1、可回收物应轻投轻放，清洁干燥、避免污染; <br />2、废纸尽量平整; <br />3、立体包装物请清空内容物，清洁后压扁投放; <br />4、有尖锐边角的，应包裹后投放。'
         },
         {
           name: '有害垃圾',
           icon: require('@/static/icon/有害垃圾标志.png'),
           img: '',
-          remarks: '禁止投放\n禁止投放禁止投放禁止投放禁止投放'
+          remarks:
+            '1、分类投放有害垃圾时，应注意轻放; <br />2、废灯管等易破损的有害垃圾应连带包装<br />3、废弃药品宜连带包装一并投放;杀虫剂等压力罐装容器，应排空内容物后投放; '
         }
       ]
     };
@@ -92,6 +97,7 @@ export default {
         sourceType: ['album', 'camera'],
         success: res => {
           console.log(res.tempFilePaths);
+          this.showPopup = true;
         }
       });
     },
@@ -108,6 +114,13 @@ export default {
 .discriminate {
   width: 100%;
   height: 100%;
+  .assignment {
+    position: absolute;
+    text-align: center;
+    top: 31%;
+    width: 100%;
+    color: #278c53;
+  }
   .discriminate-bg {
     width: 100%;
     height: 100%;

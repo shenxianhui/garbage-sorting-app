@@ -2,16 +2,16 @@
  * @Author: shenxh
  * @Date: 2021-02-03 11:45:48
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 10:51:10
+ * @LastEditTime: 2021-03-15 19:27:40
  * @Description: request 封装
  */
 
 let baseURL = '';
 // 生产环境
 if (process.env.NODE_ENV === 'production') {
-  baseURL = '';
+  baseURL = 'http://39.107.140.237:5123';
 } else {
-  // baseURL = 'http://localhost:3000';
+  baseURL = 'http://39.107.140.237:5123';
 }
 
 /**
@@ -47,6 +47,9 @@ const post = (url, data) => {
     uni.request({
       url: baseURL + url,
       data,
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded '
+      },
       method: 'post',
       success: res => {
         resolve(res.data);

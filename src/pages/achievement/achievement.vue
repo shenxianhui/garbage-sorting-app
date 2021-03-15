@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 15:14:09
+ * @LastEditTime: 2021-03-15 20:09:18
  * @Description: 我的成就
 -->
 
@@ -21,29 +21,29 @@
           mode="none"
           bg-color="transparent"
         ></u-swiper>
-        <view class="card-name">露露技能卡</view>
+        <view class="card-name">{{ currentLabel }}</view>
       </div>
       <view class="buttons">
         <view class="button" @click="handleBtn(1)">
-          <view v-if="swiperList.length" class="tag">x{{ swiperList.length }}</view>
+          <view v-if="cardsLulu.length" class="tag">x{{ cardsLulu.length }}</view>
           <image class="btn" v-if="currentBtn == 1" src="@/static/img/btn_plate_active.png" />
           <image class="btn" v-else src="@/static/img/btn_plate.png" />
           <text class="btn-name">露露</text>
         </view>
         <view class="button" @click="handleBtn(2)">
-          <view v-if="swiperList.length" class="tag">x{{ swiperList.length }}</view>
+          <view v-if="cardsLuoqi.length" class="tag">x{{ cardsLuoqi.length }}</view>
           <image class="btn" v-if="currentBtn == 2" src="@/static/img/btn_plate_active.png" />
           <image class="btn" v-else src="@/static/img/btn_plate.png" />
           <text class="btn-name">洛奇</text>
         </view>
         <view class="button" @click="handleBtn(3)">
-          <view v-if="swiperList.length" class="tag">x{{ swiperList.length }}</view>
+          <view v-if="cardsKeke.length" class="tag">x{{ cardsKeke.length }}</view>
           <image class="btn" v-if="currentBtn == 3" src="@/static/img/btn_plate_active.png" />
           <image class="btn" v-else src="@/static/img/btn_plate.png" />
           <text class="btn-name">可可</text>
         </view>
         <view class="button" @click="handleBtn(4)">
-          <view v-if="swiperList.length" class="tag">x{{ swiperList.length }}</view>
+          <view v-if="cardsBobo.length" class="tag">x{{ cardsBobo.length }}</view>
           <image class="btn" v-if="currentBtn == 4" src="@/static/img/btn_plate_active.png" />
           <image class="btn" v-else src="@/static/img/btn_plate.png" />
           <text class="btn-name">波波</text>
@@ -60,30 +60,20 @@ export default {
   props: {},
   data() {
     return {
+      currentLabel: '',
       currentBtn: 1,
-      swiperList: [],
-      luluCard: {
-        image: require('@/static/img/card_lulu.png'),
-        title: '露露技能卡'
-      },
-      luoqiCard: {
-        image: require('@/static/img/card_luoqi.png'),
-        title: '洛奇技能卡'
-      },
-      boboCard: {
-        image: require('@/static/img/card_bobo.png'),
-        title: '波波技能卡'
-      },
-      kekeCard: {
-        image: require('@/static/img/card_keke.png'),
-        title: '可可技能卡'
-      }
+      userCards: [],
+      cardsBobo: [],
+      cardsKeke: [],
+      cardsLulu: [],
+      cardsLuoqi: [],
+      swiperList: []
     };
   },
   computed: {},
   watch: {},
   onLoad() {
-    this.handleBtn(1);
+    this._getUserInfo();
   },
   onShow() {},
   onReady() {},
@@ -95,19 +85,82 @@ export default {
 
       this.currentBtn = type;
       if (type == 1) {
-        arr.push(this.luluCard, this.luluCard, this.luluCard, this.luluCard);
+        arr = this.cardsLulu;
+        this.currentLabel = '露露技能卡';
       }
       if (type == 2) {
-        arr.push(this.luoqiCard, this.luoqiCard);
-      }
-      if (type == 4) {
-        arr.push(this.boboCard);
+        arr = this.cardsLuoqi;
+        this.currentLabel = '洛奇技能卡';
       }
       if (type == 3) {
-        arr.push(this.kekeCard);
+        arr = this.cardsKeke;
+        this.currentLabel = '波波技能卡';
+      }
+      if (type == 4) {
+        arr = this.cardsLuoqi;
+        this.currentLabel = '可可技能卡';
       }
 
       this.swiperList = arr;
+    },
+
+    _getUserInfo() {
+      const { openId } = getApp().globalData.userInfo;
+
+      this.$request
+        .get('/get', {
+          wx_id: openId
+        })
+        .then(res => {
+          const { userCards } = res.data;
+          let arr = [];
+
+          userCards.map(item => {
+            if (item.quantity) {
+              for (let i = 0; i < item.quantity; i++) {
+                arr.push(
+                  Object.assign(item, {
+                    image: this._getCardFile(item.value)
+                  })
+                );
+
+                if (item.value == 'time_back') {
+                  this.cardsBobo.push(item);
+                }
+                if (item.value == 'life') {
+                  this.cardsKeke.push(item);
+                }
+                if (item.value == 'eye') {
+                  this.cardsLulu.push(item);
+                }
+                if (item.value == 'sky') {
+                  this.cardsLuoqi.push(item);
+                }
+              }
+            }
+          });
+          this.userCards = arr;
+
+          this.handleBtn(1);
+        });
+    },
+    _getCardFile(cardVal) {
+      let file;
+
+      if (cardVal == 'time_back') {
+        file = require('@/static/img/card_bobo.png');
+      }
+      if (cardVal == 'life') {
+        file = require('@/static/img/card_keke.png');
+      }
+      if (cardVal == 'eye') {
+        file = require('@/static/img/card_lulu.png');
+      }
+      if (cardVal == 'sky') {
+        file = require('@/static/img/card_luoqi.png');
+      }
+
+      return file;
     }
   }
 };

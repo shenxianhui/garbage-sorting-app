@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 14:17:13
+ * @LastEditTime: 2021-03-15 20:03:47
  * @Description: 我的卡片
 -->
 
@@ -10,13 +10,13 @@
   <view class="my-card">
     <view class="my-card-content">
       <view class="tabs">
-        <view class="tab" :class="{ active: currentTab == 1 }" @click="currentTab = 1">
+        <view class="tab" :class="{ active: currentTab == 1 }" @click="handleTab(1)">
           <view class="tab-group">
             <text>获得一次抽卡机会</text>
             <view class="tab-line"></view>
           </view>
         </view>
-        <view class="tab" :class="{ active: currentTab == 2 }" @click="currentTab = 2">
+        <view class="tab" :class="{ active: currentTab == 2 }" @click="handleTab(2)">
           <view class="tab-group">
             <text>我的卡牌</text>
             <view class="tab-line"></view>
@@ -31,14 +31,16 @@
           <image class="card" src="@/static/img/card_back_4.png" @click="handleLotteryDraw()" />
         </view>
         <view v-if="currentTab == 2" class="cards-wrap">
-          <image class="card-front" src="@/static/img/card_bobo.png" />
-          <image class="card-front" src="@/static/img/card_keke.png" />
-          <image class="card-front" src="@/static/img/card_lulu.png" />
-          <image class="card-front" src="@/static/img/card_luoqi.png" />
+          <image
+            v-for="(item, index) in userCards"
+            :key="index"
+            class="card-front"
+            :src="item.url"
+          />
         </view>
 
         <text v-if="currentTab == 1" class="instruction">恭喜您, 可以抽取卡牌了</text>
-        <text v-if="currentTab == 2" class="instruction">可以使用卡牌啦</text>
+        <!-- <text v-if="currentTab == 2" class="instruction">可以使用卡牌啦</text> -->
       </view>
     </view>
 
@@ -70,7 +72,8 @@ export default {
       showMask: false,
       currentTab: 1,
       currentCard: 0,
-      hasGetCard: false
+      hasGetCard: false,
+      userCards: []
     };
   },
   computed: {},
@@ -81,6 +84,13 @@ export default {
   onHide() {},
   onUnload() {},
   methods: {
+    handleTab(num) {
+      this.currentTab = num;
+
+      if (num == 2) {
+        this._getUserInfo();
+      }
+    },
     handleLotteryDraw() {
       if (this.hasGetCard) {
         uni.showToast({
@@ -96,10 +106,72 @@ export default {
       this.currentCard = randomNum;
       this.hasGetCard = true;
       this.showMask = true;
+
+      this._updUserInfo(randomNum);
     },
     handleGetCard() {
       this.showMask = false;
       this.currentTab = 2;
+    },
+
+    _updUserInfo(type) {
+      const { openId } = getApp().globalData.userInfo;
+
+      this.$request
+        .post('/present', {
+          wx_id: openId,
+          time_back: type == 1 ? 1 : 0,
+          life: type == 2 ? 1 : 0,
+          eye: type == 3 ? 1 : 0,
+          sky: type == 4 ? 1 : 0
+        })
+        .then(() => {
+          this._getUserInfo();
+        });
+    },
+    _getUserInfo() {
+      const { openId } = getApp().globalData.userInfo;
+
+      this.$request
+        .get('/get', {
+          wx_id: openId
+        })
+        .then(res => {
+          const { userCards } = res.data;
+          let arr = [];
+
+          userCards.map(item => {
+            if (item.quantity) {
+              for (let i = 0; i < item.quantity; i++) {
+                arr.push(
+                  Object.assign(item, {
+                    url: this._getCardFile(item.value)
+                  })
+                );
+              }
+            }
+          });
+
+          this.userCards = arr;
+        });
+    },
+    _getCardFile(cardVal) {
+      let file;
+
+      if (cardVal == 'time_back') {
+        file = require('@/static/img/card_bobo.png');
+      }
+      if (cardVal == 'life') {
+        file = require('@/static/img/card_keke.png');
+      }
+      if (cardVal == 'eye') {
+        file = require('@/static/img/card_lulu.png');
+      }
+      if (cardVal == 'sky') {
+        file = require('@/static/img/card_luoqi.png');
+      }
+
+      return file;
     }
   }
 };
@@ -115,7 +187,6 @@ export default {
     width: 100%;
     border-radius: 30rpx 30rpx 0 0;
     background-color: #fff;
-    // padding: 60rpx 80rpx;
     .tabs {
       display: flex;
       height: 80rpx;

@@ -2,7 +2,9 @@
 export default {
   // 全局变量
   globalData: {
-    userInfo: {}, // 用户信息
+    userInfo: {
+      openId: 123456
+    }, // 用户信息
     provider: 'weixin', // 服务提供商
     userCode: '' // 小程序专有，用户登录凭证
   },

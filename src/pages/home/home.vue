@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 10:38:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 14:06:24
+ * @LastEditTime: 2021-03-15 20:22:56
  * @Description: 首页
 -->
 
@@ -38,6 +38,17 @@ export default {
 
       if (type == 1) {
         url = `/pages/discriminate/discriminate`;
+      }
+      if (type == 2) {
+        // const { openId } = getApp().globalData.userInfo;
+
+        // uni.navigateToMiniProgram({
+        //   appId: 'wxc4d110c0edbf2baa',
+        //   path: `pages/index/index?id=${openId}`,
+        //   success(res) {
+        //     console.log(res);
+        //   }
+        // });
       }
       if (type == 3) {
         url = `/pages/achievement/achievement`;

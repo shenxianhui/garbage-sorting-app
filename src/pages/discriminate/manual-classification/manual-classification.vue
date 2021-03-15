@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 09:21:36
+ * @LastEditTime: 2021-03-15 20:31:19
  * @Description: 手动提交分类
 -->
 
@@ -32,7 +32,7 @@
             厨余垃圾
           </view>
           <view class="btn option" :class="{ active: form.type == 4 }" @click="handleOpt(4)">
-            干垃圾
+            其他垃圾
           </view>
         </view>
       </view>
