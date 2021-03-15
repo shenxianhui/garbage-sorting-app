@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 10:38:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 17:48:46
+ * @LastEditTime: 2021-03-15 14:06:24
  * @Description: 首页
 -->
 
@@ -38,6 +38,9 @@ export default {
 
       if (type == 1) {
         url = `/pages/discriminate/discriminate`;
+      }
+      if (type == 3) {
+        url = `/pages/achievement/achievement`;
       }
 
       uni.navigateTo({

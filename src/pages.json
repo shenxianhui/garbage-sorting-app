@@ -11,6 +11,9 @@
     },
     {
       "path": "pages/discriminate/my-card/my-card"
+    },
+    {
+      "path": "pages/achievement/achievement"
     }
   ],
   "globalStyle": {

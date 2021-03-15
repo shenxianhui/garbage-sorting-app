@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 13:53:42
+ * @LastEditTime: 2021-03-15 14:17:13
  * @Description: 我的卡片
 -->
 
@@ -34,7 +34,7 @@
           <image class="card-front" src="@/static/img/card_bobo.png" />
           <image class="card-front" src="@/static/img/card_keke.png" />
           <image class="card-front" src="@/static/img/card_lulu.png" />
-          <image class="card-front" src="@/static/img/card_peiqi.png" />
+          <image class="card-front" src="@/static/img/card_luoqi.png" />
         </view>
 
         <text v-if="currentTab == 1" class="instruction">恭喜您, 可以抽取卡牌了</text>
@@ -50,7 +50,7 @@
             <image v-if="currentCard == 1" class="card-front" src="@/static/img/card_bobo.png" />
             <image v-if="currentCard == 2" class="card-front" src="@/static/img/card_keke.png" />
             <image v-if="currentCard == 3" class="card-front" src="@/static/img/card_lulu.png" />
-            <image v-if="currentCard == 4" class="card-front" src="@/static/img/card_peiqi.png" />
+            <image v-if="currentCard == 4" class="card-front" src="@/static/img/card_luoqi.png" />
           </view>
 
           <u-button class="btn" type="success" @click="handleGetCard()">收下环保卡</u-button>
