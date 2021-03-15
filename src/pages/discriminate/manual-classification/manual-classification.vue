@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-14 21:21:41
+ * @LastEditTime: 2021-03-15 09:21:36
  * @Description: 手动提交分类
 -->
 
@@ -17,7 +17,7 @@
         <image mode="aspectFit" src="@/static/img/robot.png" />
       </view>
       <view class="product-name">
-        <u-input v-model="form.name" :clearable="false" placeholder="请输入产品名称" />
+        <u-input v-model="form.name" :clearable="false" :height="70" placeholder="请输入产品名称" />
       </view>
       <view class="select-type">
         <select-type class="title">选择分类</select-type>
@@ -147,7 +147,7 @@ export default {
     .product-name {
       margin-top: 20px;
       /deep/ input {
-        height: 100%;
+        height: 70rpx;
         background: #eee;
         border-radius: 40rpx;
         padding: 0 40rpx;
