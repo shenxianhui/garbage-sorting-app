@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-16 14:45:48
+ * @LastEditTime: 2021-03-16 15:10:54
  * @Description: 我的成就
 -->
 
@@ -125,13 +125,13 @@ export default {
                 );
 
                 if (item.value == 'time_back') {
-                  this.cardsBobo.push(item);
+                  this.cardsLulu.push(item);
                 }
                 if (item.value == 'life') {
-                  this.cardsKeke.push(item);
+                  this.cardsBobo.push(item);
                 }
                 if (item.value == 'eye') {
-                  this.cardsLulu.push(item);
+                  this.cardsKeke.push(item);
                 }
                 if (item.value == 'sky') {
                   this.cardsLuoqi.push(item);
@@ -148,13 +148,13 @@ export default {
       let file;
 
       if (cardVal == 'time_back') {
-        file = require('@/static/img/card_bobo.png');
+        file = require('@/static/img/card_lulu.png');
       }
       if (cardVal == 'life') {
-        file = require('@/static/img/card_keke.png');
+        file = require('@/static/img/card_bobo.png');
       }
       if (cardVal == 'eye') {
-        file = require('@/static/img/card_lulu.png');
+        file = require('@/static/img/card_keke.png');
       }
       if (cardVal == 'sky') {
         file = require('@/static/img/card_luoqi.png');

@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-16 14:23:07
+ * @LastEditTime: 2021-03-16 15:12:36
  * @Description: 我的卡片
 -->
 
@@ -120,9 +120,9 @@ export default {
       this.$request
         .post('/present', {
           wx_id: openId,
-          time_back: type == 1 ? 1 : 0,
-          life: type == 2 ? 1 : 0,
-          eye: type == 3 ? 1 : 0,
+          life: type == 1 ? 1 : 0,
+          eye: type == 2 ? 1 : 0,
+          time_back: type == 3 ? 1 : 0,
           sky: type == 4 ? 1 : 0
         })
         .then(() => {
@@ -159,13 +159,13 @@ export default {
       let file;
 
       if (cardVal == 'time_back') {
-        file = require('@/static/img/card_bobo.png');
+        file = require('@/static/img/card_lulu.png');
       }
       if (cardVal == 'life') {
-        file = require('@/static/img/card_keke.png');
+        file = require('@/static/img/card_bobo.png');
       }
       if (cardVal == 'eye') {
-        file = require('@/static/img/card_lulu.png');
+        file = require('@/static/img/card_keke.png');
       }
       if (cardVal == 'sky') {
         file = require('@/static/img/card_luoqi.png');
