@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 20:03:47
+ * @LastEditTime: 2021-03-16 14:23:07
  * @Description: 我的卡片
 -->
 
@@ -115,7 +115,7 @@ export default {
     },
 
     _updUserInfo(type) {
-      const { openId } = getApp().globalData.userInfo;
+      const { openId } = getApp().globalData;
 
       this.$request
         .post('/present', {
@@ -130,7 +130,7 @@ export default {
         });
     },
     _getUserInfo() {
-      const { openId } = getApp().globalData.userInfo;
+      const { openId } = getApp().globalData;
 
       this.$request
         .get('/get', {

@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 20:09:18
+ * @LastEditTime: 2021-03-16 14:45:48
  * @Description: 我的成就
 -->
 
@@ -21,7 +21,7 @@
           mode="none"
           bg-color="transparent"
         ></u-swiper>
-        <view class="card-name">{{ currentLabel }}</view>
+        <view v-if="currentLabel" class="card-name">{{ currentLabel }}</view>
       </div>
       <view class="buttons">
         <view class="button" @click="handleBtn(1)">
@@ -94,18 +94,18 @@ export default {
       }
       if (type == 3) {
         arr = this.cardsKeke;
-        this.currentLabel = '波波技能卡';
+        this.currentLabel = '可可技能卡';
       }
       if (type == 4) {
-        arr = this.cardsLuoqi;
-        this.currentLabel = '可可技能卡';
+        arr = this.cardsBobo;
+        this.currentLabel = '波波技能卡';
       }
 
       this.swiperList = arr;
     },
 
     _getUserInfo() {
-      const { openId } = getApp().globalData.userInfo;
+      const { openId } = getApp().globalData;
 
       this.$request
         .get('/get', {

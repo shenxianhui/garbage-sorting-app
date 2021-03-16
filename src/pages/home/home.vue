@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 10:38:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 20:22:56
+ * @LastEditTime: 2021-03-16 14:47:07
  * @Description: 首页
 -->
 
@@ -40,11 +40,11 @@ export default {
         url = `/pages/discriminate/discriminate`;
       }
       if (type == 2) {
-        // const { openId } = getApp().globalData.userInfo;
+        // const { openId } = getApp().globalData;
 
         // uni.navigateToMiniProgram({
         //   appId: 'wxc4d110c0edbf2baa',
-        //   path: `pages/index/index?id=${openId}`,
+        //   path: `pages/index/index?userId=${openId}`,
         //   success(res) {
         //     console.log(res);
         //   }

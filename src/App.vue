@@ -1,10 +1,11 @@
 <script>
+import request from '@/utils/request';
+
 export default {
   // 全局变量
   globalData: {
-    userInfo: {
-      openId: 123456
-    }, // 用户信息
+    userInfo: {}, // 用户信息
+    openId: null, // openId
     provider: 'weixin', // 服务提供商
     userCode: '' // 小程序专有，用户登录凭证
   },
@@ -31,8 +32,36 @@ export default {
         provider,
         success: res => {
           this.globalData.userCode = res.code;
+
+          this.getOpenId(res.code);
         }
       });
+    },
+    // 获取 openId
+    getOpenId(code) {
+      request
+        .post('/login', {
+          code
+        })
+        .then(res => {
+          if (res.wx_id) {
+            this.globalData.openId = res.wx_id;
+
+            this.registerUser(res.wx_id);
+          }
+        });
+    },
+    // 用户注册
+    registerUser(wx_id) {
+      request
+        .post('/register', {
+          wx_id
+        })
+        .then(res => {
+          if (res.wx_id) {
+            this.openId = res.wx_id;
+          }
+        });
     }
   }
 };
