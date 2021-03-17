@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-02-03 11:45:48
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 19:27:40
+ * @LastEditTime: 2021-03-17 19:15:45
  * @Description: request 封装
  */
 
@@ -48,7 +48,7 @@ const post = (url, data) => {
       url: baseURL + url,
       data,
       header: {
-        'Content-Type': 'application/x-www-form-urlencoded '
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       method: 'post',
       success: res => {

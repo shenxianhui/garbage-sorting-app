@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 20:49:37
+ * @LastEditTime: 2021-03-17 22:12:41
  * @Description: 识物
 -->
 
@@ -93,11 +93,26 @@ export default {
     handleScan() {
       uni.chooseImage({
         count: 1,
-        sizeType: ['original', 'compressed'],
+        sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: res => {
-          console.log(res.tempFilePaths);
-          this.showPopup = true;
+          console.log(res);
+          // this.showPopup = true;
+
+          uni.uploadFile({
+            url: 'http://39.107.140.237:5123/upload_pic',
+            // url: 'http://39.100.130.112:30501/frame',
+            filePath: res.tempFilePaths[0],
+            header: {
+              'Content-Type': 'multipart/form-data'
+            },
+            name: 'file',
+            formData: {},
+            success: uploadFileRes => {
+              // console.log(uploadFileRes.data);
+              console.log(uploadFileRes);
+            }
+          });
         }
       });
     },

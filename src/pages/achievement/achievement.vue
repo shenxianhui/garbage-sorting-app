@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-16 15:10:54
+ * @LastEditTime: 2021-03-17 18:40:52
  * @Description: 我的成就
 -->
 
@@ -115,30 +115,32 @@ export default {
           const { userCards } = res.data;
           let arr = [];
 
-          userCards.map(item => {
-            if (item.quantity) {
-              for (let i = 0; i < item.quantity; i++) {
-                arr.push(
-                  Object.assign(item, {
-                    image: this._getCardFile(item.value)
-                  })
-                );
+          if (userCards && userCards.length) {
+            userCards.map(item => {
+              if (item.quantity) {
+                for (let i = 0; i < item.quantity; i++) {
+                  arr.push(
+                    Object.assign(item, {
+                      image: this._getCardFile(item.value)
+                    })
+                  );
 
-                if (item.value == 'time_back') {
-                  this.cardsLulu.push(item);
-                }
-                if (item.value == 'life') {
-                  this.cardsBobo.push(item);
-                }
-                if (item.value == 'eye') {
-                  this.cardsKeke.push(item);
-                }
-                if (item.value == 'sky') {
-                  this.cardsLuoqi.push(item);
+                  if (item.value == 'time_back') {
+                    this.cardsLulu.push(item);
+                  }
+                  if (item.value == 'life') {
+                    this.cardsBobo.push(item);
+                  }
+                  if (item.value == 'eye') {
+                    this.cardsKeke.push(item);
+                  }
+                  if (item.value == 'sky') {
+                    this.cardsLuoqi.push(item);
+                  }
                 }
               }
-            }
-          });
+            });
+          }
           this.userCards = arr;
 
           this.handleBtn(1);

@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-16 15:12:36
+ * @LastEditTime: 2021-03-17 18:48:03
  * @Description: 我的卡片
 -->
 
@@ -140,17 +140,19 @@ export default {
           const { userCards } = res.data;
           let arr = [];
 
-          userCards.map(item => {
-            if (item.quantity) {
-              for (let i = 0; i < item.quantity; i++) {
-                arr.push(
-                  Object.assign(item, {
-                    url: this._getCardFile(item.value)
-                  })
-                );
+          if (userCards && userCards.length) {
+            userCards.map(item => {
+              if (item.quantity) {
+                for (let i = 0; i < item.quantity; i++) {
+                  arr.push(
+                    Object.assign(item, {
+                      url: this._getCardFile(item.value)
+                    })
+                  );
+                }
               }
-            }
-          });
+            });
+          }
 
           this.userCards = arr;
         });
