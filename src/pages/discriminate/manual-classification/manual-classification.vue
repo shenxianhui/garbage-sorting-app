@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-15 20:31:19
+ * @LastEditTime: 2021-03-23 11:45:45
  * @Description: 手动提交分类
 -->
 
@@ -26,10 +26,10 @@
             可回收垃圾
           </view>
           <view class="btn option" :class="{ active: form.type == 2 }" @click="handleOpt(2)">
-            有害垃圾
+            厨余垃圾
           </view>
           <view class="btn option" :class="{ active: form.type == 3 }" @click="handleOpt(3)">
-            厨余垃圾
+            有害垃圾
           </view>
           <view class="btn option" :class="{ active: form.type == 4 }" @click="handleOpt(4)">
             其他垃圾
@@ -51,8 +51,9 @@ export default {
     return {
       form: {
         name: '',
-        type: null
-      }
+        type: 0
+      },
+      hasSubForm: false
     };
   },
   computed: {},
@@ -65,12 +66,15 @@ export default {
   methods: {
     handleOpt(type) {
       if (this.form.type == type) {
-        this.form.type = null;
+        this.form.type = 0;
       } else {
         this.form.type = type;
       }
     },
     handleSubForm() {
+      const { openId } = getApp().globalData;
+      const { name, type } = this.form;
+
       if (!this.form.name) {
         uni.showToast({
           title: '请输入产品名称',
@@ -80,14 +84,35 @@ export default {
 
         return;
       }
+      if (this.hasSubForm) {
+        uni.showToast({
+          title: '请勿重复提交',
+          icon: 'none',
+          duration: 2000
+        });
+        return;
+      }
 
-      uni.showToast({
-        title: '提交成功',
-        icon: 'success',
-        duration: 2000
-      });
+      this.hasSubForm = true;
+      this.$request
+        .post('/submit_unfound', {
+          wx_id: openId,
+          url: '',
+          name,
+          value: type
+        })
+        .then(res => {
+          uni.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000
+          });
+          this.hasSubForm = false;
+        })
+        .catch(err => {
+          this.hasSubForm = false;
+        });
 
-      console.log(this.form);
       uni.redirectTo({
         url: `/pages/discriminate/my-card/my-card`
       });
