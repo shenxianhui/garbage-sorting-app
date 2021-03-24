@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-24 16:13:01
+ * @LastEditTime: 2021-03-24 16:58:02
  * @Description: 手动提交分类
 -->
 
@@ -14,7 +14,7 @@
         <view class="btn guide-text">请帮我识别一下</view>
       </view>
       <view class="goods-img">
-        <image mode="aspectFit" src="@/static/img/robot.png" />
+        <image mode="aspectFit" :src="pageParams.imgUrl" />
       </view>
       <view class="product-name">
         <u-input v-model="form.name" :clearable="false" :height="70" placeholder="请输入产品名称" />
