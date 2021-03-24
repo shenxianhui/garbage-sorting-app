@@ -1,8 +1,8 @@
 # 垃圾分类小程序
 
 ## 技术栈
-+ uni-app
-+ uView-UI
++ [uni-app](https://uniapp.dcloud.io/README)
++ [uView-UI](https://uviewui.com/components/intro.html)
 + scss
 
 ## 技术点
