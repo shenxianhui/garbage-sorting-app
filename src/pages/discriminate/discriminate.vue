@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-24 13:58:36
+ * @LastEditTime: 2021-03-24 16:10:17
  * @Description: 识物
 -->
 
@@ -130,12 +130,8 @@ export default {
         sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: res => {
-          this.garbageImg = res.tempFilePaths[0];
-          // this.showPopup = true;
-
           uni.uploadFile({
             url: 'http://39.100.130.112:30001/upload_pic',
-            // url: 'http://39.100.130.112:30501/frame',
             filePath: res.tempFilePaths[0],
             header: {
               'Content-Type': 'multipart/form-data'
@@ -155,6 +151,7 @@ export default {
               const { result } = JSON.parse(uploadFileRes.data);
 
               if (result && result.length) {
+                this.garbageImg = result[0].pic_url;
                 this.swiperList = result;
                 this.showPopup = true;
               } else {
@@ -171,7 +168,7 @@ export default {
     },
     handleType() {
       uni.navigateTo({
-        url: `/pages/discriminate/manual-classification/manual-classification`
+        url: `/pages/discriminate/manual-classification/manual-classification?imgUrl=${this.garbageImg}`
       });
     },
     closePopup() {

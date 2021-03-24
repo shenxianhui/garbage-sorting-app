@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-23 11:45:45
+ * @LastEditTime: 2021-03-24 16:13:01
  * @Description: 手动提交分类
 -->
 
@@ -49,6 +49,7 @@ export default {
   props: {},
   data() {
     return {
+      pageParams: {},
       form: {
         name: '',
         type: 0
@@ -58,7 +59,9 @@ export default {
   },
   computed: {},
   watch: {},
-  onLoad() {},
+  onLoad(data) {
+    this.pageParams = data;
+  },
   onShow() {},
   onReady() {},
   onHide() {},
@@ -97,7 +100,7 @@ export default {
       this.$request
         .post('/submit_unfound', {
           wx_id: openId,
-          url: '',
+          url: this.pageParams.imgUrl,
           name,
           value: type
         })
