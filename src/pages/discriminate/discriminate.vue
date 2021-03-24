@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-22 20:46:04
+ * @LastEditTime: 2021-03-24 13:58:36
  * @Description: 识物
 -->
 
@@ -25,7 +25,9 @@
               </view>
             </view>
             <view class="popup-body">
-              <view class="goods-img"> </view>
+              <view class="goods-img">
+                <image class="garbage-img" :src="garbageImg" />
+              </view>
               <view class="line"></view>
               <view v-if="item.value" class="remarks">
                 <view class="remarks-tit">
@@ -53,7 +55,8 @@ export default {
   props: {},
   data() {
     return {
-      showPopup: true,
+      showPopup: false,
+      garbageImg: '',
       garbageType: [
         {
           name: '可回收垃圾',
@@ -127,7 +130,7 @@ export default {
         sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: res => {
-          console.log(res);
+          this.garbageImg = res.tempFilePaths[0];
           // this.showPopup = true;
 
           uni.uploadFile({
@@ -140,8 +143,27 @@ export default {
             name: 'file',
             formData: {},
             success: uploadFileRes => {
-              // console.log(uploadFileRes.data);
-              console.log(uploadFileRes);
+              if (uploadFileRes.statusCode != 200) {
+                uni.showToast({
+                  title: '接口请求失败',
+                  icon: 'none',
+                  duration: 2000
+                });
+                return;
+              }
+
+              const { result } = JSON.parse(uploadFileRes.data);
+
+              if (result && result.length) {
+                this.swiperList = result;
+                this.showPopup = true;
+              } else {
+                uni.showToast({
+                  title: '参数为空',
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
             }
           });
         }
@@ -229,6 +251,11 @@ export default {
         height: 300rpx;
         margin: 10rpx auto 30rpx;
         border: 1px solid #66cc66;
+        overflow: hidden;
+        .garbage-img {
+          width: 100%;
+          height: 100%;
+        }
       }
       .line {
         width: 100%;
