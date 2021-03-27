@@ -7,7 +7,8 @@ export default {
     userInfo: {}, // 用户信息
     openId: null, // openId
     provider: 'weixin', // 服务提供商
-    userCode: '' // 小程序专有，用户登录凭证
+    userCode: '', // 小程序专有，用户登录凭证
+    probability: {} // 抽奖概率
   },
   onLaunch() {
     uni.getProvider({
@@ -46,6 +47,7 @@ export default {
         .then(res => {
           if (res.wx_id) {
             this.globalData.openId = res.wx_id;
+            this.globalData.probability = res.probability;
 
             this.registerUser(res.wx_id);
           }

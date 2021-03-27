@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-17 18:48:03
+ * @LastEditTime: 2021-03-27 17:31:19
  * @Description: 我的卡片
 -->
 
@@ -71,7 +71,7 @@ export default {
     return {
       showMask: false,
       currentTab: 1,
-      currentCard: 0,
+      currentCard: 1,
       hasGetCard: false,
       userCards: []
     };
@@ -101,19 +101,33 @@ export default {
 
         return;
       }
-      let randomNum = Math.round(Math.random() * 3) + 1;
 
-      this.currentCard = randomNum;
-      this.hasGetCard = true;
-      this.showMask = true;
-
-      this._updUserInfo(randomNum);
+      this._countProbability();
     },
     handleGetCard() {
       this.showMask = false;
       this.currentTab = 2;
     },
 
+    _countProbability() {
+      const { probability } = getApp().globalData;
+      const { bobo, keke, lulu, luoqi } = probability;
+      const arr = [
+        [0, bobo],
+        [bobo, bobo + keke],
+        [bobo + keke, bobo + keke + lulu],
+        [bobo + keke + lulu, bobo + keke + lulu + luoqi]
+      ];
+      const randomNum = Math.random();
+
+      arr.forEach((item, index) => {
+        if (item[0] <= randomNum && randomNum < item[1]) {
+          this.currentCard = index;
+        }
+      });
+
+      this._updUserInfo(randomNum);
+    },
     _updUserInfo(type) {
       const { openId } = getApp().globalData;
 
@@ -125,7 +139,18 @@ export default {
           time_back: type == 3 ? 1 : 0,
           sky: type == 4 ? 1 : 0
         })
-        .then(() => {
+        .then(res => {
+          if (res.code == -1) {
+            uni.showToast({
+              title: '今日抽奖机会已用完, 请明天再来~',
+              icon: 'none',
+              duration: 2000
+            });
+            return;
+          }
+          this.hasGetCard = true;
+          this.showMask = true;
+
           this._getUserInfo();
         });
     },

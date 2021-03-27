@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-24 16:10:17
+ * @LastEditTime: 2021-03-27 17:25:52
  * @Description: 识物
 -->
 
@@ -130,6 +130,9 @@ export default {
         sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: res => {
+          uni.showLoading({
+            title: '加载中...'
+          });
           uni.uploadFile({
             url: 'http://39.100.130.112:30001/upload_pic',
             filePath: res.tempFilePaths[0],
@@ -139,6 +142,7 @@ export default {
             name: 'file',
             formData: {},
             success: uploadFileRes => {
+              uni.hideLoading();
               if (uploadFileRes.statusCode != 200) {
                 uni.showToast({
                   title: '接口请求失败',
