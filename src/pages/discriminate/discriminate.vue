@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-27 17:25:52
+ * @LastEditTime: 2021-03-29 17:23:45
  * @Description: 识物
 -->
 
@@ -171,6 +171,7 @@ export default {
       });
     },
     handleType() {
+      this.showPopup = false;
       uni.navigateTo({
         url: `/pages/discriminate/manual-classification/manual-classification?imgUrl=${this.garbageImg}`
       });
