@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 17:25:31
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-27 17:31:19
+ * @LastEditTime: 2021-03-27 20:08:59
  * @Description: 我的卡片
 -->
 
@@ -122,22 +122,22 @@ export default {
 
       arr.forEach((item, index) => {
         if (item[0] <= randomNum && randomNum < item[1]) {
-          this.currentCard = index;
+          this.currentCard = index + 1;
         }
       });
 
-      this._updUserInfo(randomNum);
+      this._updUserInfo();
     },
-    _updUserInfo(type) {
+    _updUserInfo() {
       const { openId } = getApp().globalData;
 
       this.$request
         .post('/present', {
           wx_id: openId,
-          life: type == 1 ? 1 : 0,
-          eye: type == 2 ? 1 : 0,
-          time_back: type == 3 ? 1 : 0,
-          sky: type == 4 ? 1 : 0
+          life: this.currentCard == 1 ? 1 : 0,
+          eye: this.currentCard == 2 ? 1 : 0,
+          time_back: this.currentCard == 3 ? 1 : 0,
+          sky: this.currentCard == 4 ? 1 : 0
         })
         .then(res => {
           if (res.code == -1) {
