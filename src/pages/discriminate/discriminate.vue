@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-29 17:23:45
+ * @LastEditTime: 2021-04-09 16:41:28
  * @Description: 识物
 -->
 
@@ -17,7 +17,7 @@
       <swiper class="swiper" :autoplay="false">
         <swiper-item v-for="(item, index) in swiperList" :key="index">
           <view class="popup-content">
-            <view class="popup-header">
+            <view class="popup-header" :style="garbageType[item.value - 1].background">
               <view class="popup-header-tag"></view>
               <view v-if="item.value" class="popup-header-title">
                 <text>{{ garbageType[item.value - 1].name }}</text>
@@ -62,6 +62,8 @@ export default {
           name: '可回收垃圾',
           icon: require('@/static/icon/可回收垃圾图标.png'),
           img: '',
+          color: 'color: #0066cc',
+          background: 'background: #0066cc',
           remarks:
             '1、可回收物应轻投轻放，清洁干燥、避免污染; <br />2、废纸尽量平整; <br />3、立体包装物请清空内容物，清洁后压扁投放; <br />4、有尖锐边角的，应包裹后投放。'
         },
@@ -69,6 +71,8 @@ export default {
           name: '湿垃圾',
           icon: require('@/static/icon/厨余垃圾标志.png'),
           img: '',
+          color: 'color: #66cc66',
+          background: 'background: #66cc66',
           remarks:
             '投放前尽量沥干水分。<br />有包装物的湿垃圾应将包装物去除后分类投放，包装物应投放到对应的可回收物或干垃圾收集容器。'
         },
@@ -76,6 +80,8 @@ export default {
           name: '有害垃圾',
           icon: require('@/static/icon/有害垃圾标志.png'),
           img: '',
+          color: 'color: #990000',
+          background: 'background: #990000',
           remarks:
             '1、分类投放有害垃圾时，应注意轻放; <br />2、废灯管等易破损的有害垃圾应连带包装<br />3、废弃药品宜连带包装一并投放;杀虫剂等压力罐装容器，应排空内容物后投放; '
         },
@@ -83,6 +89,8 @@ export default {
           name: '干垃圾',
           icon: require('@/static/icon/其他垃圾图标.png'),
           img: '',
+          color: 'color: #999999',
+          background: 'background: #999999',
           remarks:
             '禁止混投。<br />其他垃圾应投入其他垃圾收集容器，并保持周边环境整洁。凡未列入本目录或成分复杂难以分辨类别的生活垃圾,投入其他垃圾收集容器。'
         }
@@ -240,19 +248,19 @@ export default {
         padding: 0 10rpx;
         .icon {
           flex-shrink: 0;
-          width: 50rpx;
-          height: 50rpx;
+          width: 40rpx;
+          height: 40rpx;
         }
       }
     }
     .popup-body {
       padding: 20rpx 30rpx;
-      color: #66cc66;
+      color: #333;
       .goods-img {
         width: 300rpx;
         height: 300rpx;
         margin: 10rpx auto 30rpx;
-        border: 1px solid #66cc66;
+        border: 1px solid #333;
         overflow: hidden;
         .garbage-img {
           width: 100%;
@@ -261,7 +269,7 @@ export default {
       }
       .line {
         width: 100%;
-        border: 1px dashed #66cc66;
+        border: 1px dashed #333;
       }
       .remarks {
         margin-top: 10rpx;
@@ -274,7 +282,8 @@ export default {
             top: 0;
             width: 8rpx;
             height: 30rpx;
-            background: #66cc66;
+            background: #333;
+            color: #333;
             margin-right: 10rpx;
           }
         }
@@ -283,6 +292,7 @@ export default {
           margin-top: 10rpx;
           padding: 0 20rpx;
           line-height: 1.5;
+          color: #666;
           /deep/ rich-text {
             line-height: 1.5;
           }
