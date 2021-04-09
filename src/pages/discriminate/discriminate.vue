@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-04-09 16:41:28
+ * @LastEditTime: 2021-04-09 21:37:42
  * @Description: 识物
 -->
 
@@ -68,7 +68,7 @@ export default {
             '1、可回收物应轻投轻放，清洁干燥、避免污染; <br />2、废纸尽量平整; <br />3、立体包装物请清空内容物，清洁后压扁投放; <br />4、有尖锐边角的，应包裹后投放。'
         },
         {
-          name: '湿垃圾',
+          name: '厨余垃圾',
           icon: require('@/static/icon/厨余垃圾标志.png'),
           img: '',
           color: 'color: #66cc66',
@@ -86,7 +86,7 @@ export default {
             '1、分类投放有害垃圾时，应注意轻放; <br />2、废灯管等易破损的有害垃圾应连带包装<br />3、废弃药品宜连带包装一并投放;杀虫剂等压力罐装容器，应排空内容物后投放; '
         },
         {
-          name: '干垃圾',
+          name: '其他垃圾',
           icon: require('@/static/icon/其他垃圾图标.png'),
           img: '',
           color: 'color: #999999',
