@@ -14,6 +14,13 @@
     },
     {
       "path": "pages/achievement/achievement"
+    },
+    {
+      "path": "pages/achievement/rank/rank",
+      "style": {
+        "navigationBarTitleText": "排行榜",
+        "navigationBarBackgroundColor": "#278c52"
+      }
     }
   ],
   "globalStyle": {

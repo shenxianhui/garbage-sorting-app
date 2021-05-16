@@ -2,12 +2,13 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-03-17 18:40:52
+ * @LastEditTime: 2021-05-16 11:19:11
  * @Description: 我的成就
 -->
 
 <template>
   <view class="achievement">
+    <view class="rank" @click="handleRank()"></view>
     <image class="achievement-bg" src="@/static/img/achievement_bg.png" />
     <view class="achievement-wrap">
       <view class="achievement-title">集齐卡牌, 增值能量</view>
@@ -103,6 +104,11 @@ export default {
 
       this.swiperList = arr;
     },
+    handleRank() {
+      uni.navigateTo({
+        url: `/pages/achievement/rank/rank`
+      });
+    },
 
     _getUserInfo() {
       const { openId } = getApp().globalData;
@@ -172,6 +178,13 @@ export default {
 .achievement {
   width: 100%;
   height: 100%;
+  .rank {
+    position: absolute;
+    right: 15rpx;
+    top: 280rpx;
+    width: 100rpx;
+    height: 50rpx;
+  }
   .achievement-bg {
     position: absolute;
     width: 100%;
