@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-05-16 11:10:42
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-17 14:09:40
+ * @LastEditTime: 2021-05-17 17:36:49
  * @Description: 排行榜
 -->
 
@@ -14,28 +14,29 @@
         <view class="user-info">
           <view class="user-info-left">
             <view class="user-img">
-              <view class="user-img-default"></view>
+              <!-- <view class="user-img-default"></view> -->
+              <image class="user-img-default" src="@/static/avatar/10.jpg" alt="" />
             </view>
             <view class="user-name">
-              <view class="name">用户昵称</view>
+              <view class="name">suncaiya</view>
               <view class="last-time">上次登录时间：12h前</view>
             </view>
           </view>
-          <view class="user-info-right">
+          <view class="user-info-right" @click="signIn++">
             签到领能量
           </view>
         </view>
         <view class="rank-num">
           <view class="rank-group">
-            <view class="value">999</view>
+            <view class="value">{{ mayCardTotal }}</view>
             <view class="label">卡牌</view>
           </view>
           <view class="rank-group">
-            <view class="value">999</view>
+            <view class="value">11</view>
             <view class="label">排名</view>
           </view>
           <view class="rank-group">
-            <view class="value">999</view>
+            <view class="value">{{ signIn }}</view>
             <view class="label">签到</view>
           </view>
         </view>
@@ -59,10 +60,10 @@
                 <image v-else-if="index === 2" src="@/static/img/medal_3.png" alt="" />
                 <view v-else class="num">{{ index + 1 }}</view>
               </view>
-              <image class="user-img" src="@/static/img/robot.png" alt="" />
+              <image class="user-img" :src="item.avatar" alt="" />
               <view class="user-group">
-                <view class="label">{{ item.name + (index + 1) }}</view>
-                <view class="value">{{ item.cardQua }}张</view>
+                <view class="label">{{ item.name }}</view>
+                <view class="value">{{ item.cardQua }} 张</view>
               </view>
             </view>
             <view class="user-card-right" @click="handleSendCard(item)">赠卡</view>
@@ -79,6 +80,29 @@
       :cancel-btn="true"
       @click="handleMenu"
     ></u-action-sheet>
+    <!-- 弹出框 -->
+    <u-popup class="rank-popup" v-model="showPopup" mode="center">
+      <view class="popup-content">
+        <view class="close" @click="showPopup = false"></view>
+        <view class="popup-content-wrap">
+          <view class="popup-card-bg">
+            <image src="@/static/img/popup_bg.png" alt="" />
+          </view>
+          <view class="popup-card">
+            <view class="user-info">
+              <image class="user-avatar" src="@/static/avatar/17.jpg" />
+              <view class="user-group">
+                <view class="label">发送给：</view>
+                <view class="name">{{ currentUser.name }}</view>
+              </view>
+            </view>
+            <view class="card-title">{{ currentMenu.name }}</view>
+            <view class="card-det">{{ currentMenu.detail }}</view>
+          </view>
+        </view>
+        <view class="popup-btn" @click="handleSendBtn()">赠送</view>
+      </view>
+    </u-popup>
   </view>
 </template>
 
@@ -89,8 +113,12 @@ export default {
   props: {},
   data() {
     return {
+      signIn: 18,
+      mayCardTotal: 0,
+      showPopup: false,
       currentTab: 0,
-      currentUser: {}, // 当前选中用户
+      currentUser: {},
+      currentMenu: {},
       showMenu: false,
       tabList: [
         {
@@ -107,16 +135,24 @@ export default {
       },
       menuList: [
         {
-          text: '可可卡'
+          text: '可可卡',
+          name: '可可卡——火眼金睛',
+          detail: '在游戏分类模块，帮你找到符合目标的垃圾'
         },
         {
-          text: '露露卡'
+          text: '露露卡',
+          name: '露露卡——时光回溯',
+          detail: '在游戏分类模块，在关卡中给你额外加上5s时间'
         },
         {
-          text: '洛奇卡'
+          text: '洛奇卡',
+          name: '洛奇卡——苍穹庇护',
+          detail: '在游戏分类模块，帮你排除错误的垃圾'
         },
         {
-          text: '波波卡'
+          text: '波波卡',
+          name: '波波卡——绝地重生',
+          detail: '在游戏分类模块，任务失败后，帮你复活一次'
         }
       ],
       rankList: [],
@@ -129,6 +165,8 @@ export default {
   onLoad() {
     this.rankList = this.weekRankList = this._mockRank();
     this.monthRankList = this._mockRank('month');
+
+    this._getUserInfo();
   },
   onShow() {},
   onReady() {},
@@ -151,21 +189,56 @@ export default {
     handleMenu(idx) {
       const menu = this.menuList[idx];
 
-      console.log(menu);
+      this.currentMenu = menu;
+      this.showPopup = true;
+    },
+    handleSendBtn() {
+      uni.showToast({
+        title: '赠送成功',
+        icon: 'success',
+        duration: 2000
+      });
+      this.showPopup = false;
     },
 
+    _getUserInfo() {
+      const { openId } = getApp().globalData;
+
+      this.$request
+        .get('/get', {
+          wx_id: openId
+        })
+        .then(res => {
+          const { userCards } = res.data;
+
+          if (userCards && userCards.length) {
+            let quaTotal = 0;
+
+            userCards.forEach(item => {
+              quaTotal += item.quantity;
+            });
+
+            this.mayCardTotal = quaTotal;
+          }
+        });
+    },
     _mockRank(type = 'week') {
       let rankList = [];
+      let hasAvatar = [];
 
       for (let i = 0; i < 10; i++) {
         let random = Math.round(Math.random() * 20);
+        let randomAvatar = this._getRandom(hasAvatar, 20);
+
+        hasAvatar.push(randomAvatar);
 
         if (type == 'month') {
           random = Math.round(Math.random() * 100 + 20);
         }
         rankList.push({
-          name: '用户',
-          cardQua: random
+          name: '用户' + (i + 1),
+          cardQua: random,
+          avatar: require(`@/static/avatar/${randomAvatar || 1}.jpg`)
         });
       }
 
@@ -174,6 +247,16 @@ export default {
       });
 
       return rankList;
+    },
+    // 获取不重复的随机数
+    _getRandom(list, max) {
+      let randomAvatar = Math.round(Math.random() * max);
+
+      if (list.includes(randomAvatar)) {
+        return this._getRandom(list, max);
+      } else {
+        return randomAvatar;
+      }
     }
   }
 };
@@ -304,6 +387,7 @@ export default {
               .label {
                 font-size: 24rpx;
                 color: #333;
+                margin-bottom: 10rpx;
               }
               .value {
                 font-size: 20rpx;
@@ -323,6 +407,88 @@ export default {
           }
         }
       }
+    }
+  }
+  /deep/ .rank-popup {
+    .u-drawer {
+      .u-drawer-content {
+        .u-mode-center-box {
+          background: transparent;
+        }
+      }
+    }
+    .popup-content {
+      .close {
+        position: absolute;
+        right: 10rpx;
+        top: 35rpx;
+        width: 70rpx;
+        height: 70rpx;
+      }
+      .popup-card-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600rpx;
+        height: 530rpx;
+        z-index: -1;
+        image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .popup-card {
+        width: 600rpx;
+        height: 530rpx;
+        padding: 20rpx;
+        .user-info {
+          display: flex;
+          align-items: center;
+          .user-avatar {
+            width: 80rpx;
+            height: 80rpx;
+            border-radius: 50%;
+            border: 5rpx solid #fff;
+            margin-right: 20rpx;
+          }
+          .user-group {
+            color: #fff;
+            opacity: 0.8;
+            .label {
+              margin-bottom: 10rpx;
+            }
+          }
+        }
+        .card-title {
+          position: absolute;
+          top: 165rpx;
+          width: 560rpx;
+          text-align: center;
+          font-size: 32rpx;
+          color: #fff;
+          opacity: 0.8;
+        }
+        .card-det {
+          position: absolute;
+          bottom: 145rpx;
+          width: 560rpx;
+          text-align: center;
+          font-size: 28rpx;
+          color: #fff;
+          opacity: 0.8;
+        }
+      }
+    }
+    .popup-btn {
+      width: 200rpx;
+      height: 68rpx;
+      margin: 50rpx auto 0;
+      text-align: center;
+      line-height: 68rpx;
+      font-size: 32rpx;
+      color: #fff;
+      background: #278c52;
+      border-radius: 34rpx;
     }
   }
 }

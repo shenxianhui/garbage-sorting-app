@@ -2,15 +2,16 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-17 14:14:52
+ * @LastEditTime: 2021-05-17 16:52:35
  * @Description: 我的成就
 -->
 
 <template>
   <view class="achievement">
-    <view class="rank" @click="handleRank()"></view>
-    <image class="achievement-bg" src="@/static/img/achievement_bg.png" />
+    <view class="rank" @click="handleRank()">排行榜</view>
+    <!-- <image class="achievement-bg" src="@/static/img/achievement_bg.png" /> -->
     <view class="achievement-wrap">
+      <view class="achievement-name">我的成就</view>
       <view class="achievement-title">集齐卡牌, 增值能量</view>
       <view class="wrap">
         <u-swiper
@@ -66,8 +67,8 @@
         <view v-if="currentLabel == '露露技能卡'" class="popup-card">
           <image class="card-img" src="@/static/img/card_round_lulu.png" />
           <view class="card-group">
-            <view class="card-name">时光回溯 </view>
-            <view class="card-det">在游戏分类模块，在关卡中给你额外加上5s时间 </view>
+            <view class="card-name">时光回溯</view>
+            <view class="card-det">在游戏分类模块，在关卡中给你额外加上5s时间</view>
           </view>
         </view>
         <view v-if="currentLabel == '洛奇技能卡'" class="popup-card">
@@ -88,7 +89,7 @@
           <image class="card-img" src="@/static/img/card_round_bobo.png" />
           <view class="card-group">
             <view class="card-name">绝地重生</view>
-            <view class="card-det">在游戏分类模块，任务失败后，帮你复活一次 </view>
+            <view class="card-det">在游戏分类模块，任务失败后，帮你复活一次</view>
           </view>
         </view>
       </view>
@@ -227,22 +228,30 @@ export default {
   .rank {
     position: absolute;
     right: 15rpx;
-    top: 16vh;
-    width: 100rpx;
-    height: 70rpx;
+    top: 19vh;
+    // width: 100rpx;
+    // height: 70rpx;
+    font-size: 28rpx;
+    padding: 20rpx;
+    color: #e7aa43;
   }
-  .achievement-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
+  // .achievement-bg {
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   z-index: -1;
+  // }
   .achievement-wrap {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 150rpx 30rpx 50rpx;
+    padding: 120rpx 30rpx 50rpx;
     height: 100%;
+    background-color: #deede4;
+    .achievement-name {
+      text-align: center;
+      font-size: 34rpx;
+    }
     .achievement-title {
       text-align: center;
       width: 520rpx;
