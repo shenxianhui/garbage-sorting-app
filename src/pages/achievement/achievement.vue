@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-15 13:55:56
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-16 11:19:11
+ * @LastEditTime: 2021-05-17 14:14:52
  * @Description: 我的成就
 -->
 
@@ -12,7 +12,7 @@
     <image class="achievement-bg" src="@/static/img/achievement_bg.png" />
     <view class="achievement-wrap">
       <view class="achievement-title">集齐卡牌, 增值能量</view>
-      <div class="wrap">
+      <view class="wrap">
         <u-swiper
           class="swiper"
           :list="swiperList"
@@ -22,8 +22,10 @@
           mode="none"
           bg-color="transparent"
         ></u-swiper>
-        <view v-if="currentLabel" class="card-name">{{ currentLabel }}</view>
-      </div>
+        <view v-if="currentLabel" class="card-name" @click="handleCardBtn()">
+          {{ currentLabel }}
+        </view>
+      </view>
       <view class="buttons">
         <view class="button" @click="handleBtn(1)">
           <view v-if="cardsLulu.length" class="tag">x{{ cardsLulu.length }}</view>
@@ -51,6 +53,46 @@
         </view>
       </view>
     </view>
+
+    <!-- 弹出框 -->
+    <u-popup
+      class="achievement-popup"
+      v-model="showPopup"
+      mode="bottom"
+      safe-area-inset-bottom
+      border-radius="30"
+    >
+      <view class="popup-content">
+        <view v-if="currentLabel == '露露技能卡'" class="popup-card">
+          <image class="card-img" src="@/static/img/card_round_lulu.png" />
+          <view class="card-group">
+            <view class="card-name">时光回溯 </view>
+            <view class="card-det">在游戏分类模块，在关卡中给你额外加上5s时间 </view>
+          </view>
+        </view>
+        <view v-if="currentLabel == '洛奇技能卡'" class="popup-card">
+          <image class="card-img" src="@/static/img/card_round_luoqi.png" />
+          <view class="card-group">
+            <view class="card-name">苍穹庇护</view>
+            <view class="card-det">在游戏分类模块，帮你排除错误的垃圾</view>
+          </view>
+        </view>
+        <view v-if="currentLabel == '可可技能卡'" class="popup-card">
+          <image class="card-img" src="@/static/img/card_round_keke.png" />
+          <view class="card-group">
+            <view class="card-name">火眼金睛</view>
+            <view class="card-det">在游戏分类模块，帮你找到符合目标的垃圾</view>
+          </view>
+        </view>
+        <view v-if="currentLabel == '波波技能卡'" class="popup-card">
+          <image class="card-img" src="@/static/img/card_round_bobo.png" />
+          <view class="card-group">
+            <view class="card-name">绝地重生</view>
+            <view class="card-det">在游戏分类模块，任务失败后，帮你复活一次 </view>
+          </view>
+        </view>
+      </view>
+    </u-popup>
   </view>
 </template>
 
@@ -61,6 +103,7 @@ export default {
   props: {},
   data() {
     return {
+      showPopup: false,
       currentLabel: '',
       currentBtn: 1,
       userCards: [],
@@ -108,6 +151,9 @@ export default {
       uni.navigateTo({
         url: `/pages/achievement/rank/rank`
       });
+    },
+    handleCardBtn() {
+      this.showPopup = true;
     },
 
     _getUserInfo() {
@@ -181,9 +227,9 @@ export default {
   .rank {
     position: absolute;
     right: 15rpx;
-    top: 280rpx;
+    top: 16vh;
     width: 100rpx;
-    height: 50rpx;
+    height: 70rpx;
   }
   .achievement-bg {
     position: absolute;
@@ -265,6 +311,38 @@ export default {
         .btn-name {
           font-size: 26rpx;
           color: #278c53;
+        }
+      }
+    }
+  }
+  /deep/ .achievement-popup {
+    .u-drawer {
+      .u-drawer-content {
+        background-color: #278c52;
+      }
+    }
+    .popup-content {
+      .popup-card {
+        display: flex;
+        align-items: center;
+        padding: 20rpx;
+        .card-img {
+          flex-shrink: 0;
+          width: 200rpx;
+          height: 200rpx;
+          margin-right: 30rpx;
+        }
+        .card-group {
+          .card-name {
+            font-size: 48rpx;
+            color: #fff;
+            margin-bottom: 35rpx;
+          }
+          .card-det {
+            font-size: 36rpx;
+            color: #fff;
+            line-height: 1.5;
+          }
         }
       }
     }

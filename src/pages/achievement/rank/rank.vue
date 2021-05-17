@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-05-16 11:10:42
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-17 11:50:03
+ * @LastEditTime: 2021-05-17 14:09:40
  * @Description: 排行榜
 -->
 
@@ -205,7 +205,7 @@ export default {
           display: flex;
           align-items: center;
           .user-img {
-            flex-shrink: 1;
+            flex-shrink: 0;
             width: 135rpx;
             height: 135rpx;
             margin-right: 20rpx;
