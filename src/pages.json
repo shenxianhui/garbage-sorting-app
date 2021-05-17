@@ -18,6 +18,7 @@
     {
       "path": "pages/achievement/rank/rank",
       "style": {
+        "navigationStyle": "default",
         "navigationBarTitleText": "排行榜",
         "navigationBarBackgroundColor": "#278c52"
       }
