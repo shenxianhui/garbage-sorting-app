@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-05-16 11:10:42
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-17 17:36:49
+ * @LastEditTime: 2021-05-18 09:45:48
  * @Description: 排行榜
 -->
 
@@ -90,7 +90,7 @@
           </view>
           <view class="popup-card">
             <view class="user-info">
-              <image class="user-avatar" src="@/static/avatar/17.jpg" />
+              <image class="user-avatar" :src="currentUser.avatar" />
               <view class="user-group">
                 <view class="label">发送给：</view>
                 <view class="name">{{ currentUser.name }}</view>
@@ -238,7 +238,7 @@ export default {
         rankList.push({
           name: '用户' + (i + 1),
           cardQua: random,
-          avatar: require(`@/static/avatar/${randomAvatar || 1}.jpg`)
+          avatar: require(`@/static/avatar/${randomAvatar || 0}.jpg`)
         });
       }
 

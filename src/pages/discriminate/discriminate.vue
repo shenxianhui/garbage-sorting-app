@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-04-09 21:37:42
+ * @LastEditTime: 2021-05-18 09:34:13
  * @Description: 识物
 -->
 
@@ -142,7 +142,8 @@ export default {
             title: '加载中...'
           });
           uni.uploadFile({
-            url: 'http://39.100.130.112:30001/upload_pic',
+            // url: 'http://39.100.130.112:30001/upload_pic',
+            url: 'http://162.105.86.209:30001/upload_pic',
             filePath: res.tempFilePaths[0],
             header: {
               'Content-Type': 'multipart/form-data'
