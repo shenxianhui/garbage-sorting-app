@@ -2,7 +2,7 @@
  * @Author: shenxh
  * @Date: 2021-03-14 11:17:10
  * @LastEditors: shenxh
- * @LastEditTime: 2021-05-18 09:34:13
+ * @LastEditTime: 2021-05-19 11:14:42
  * @Description: 识物
 -->
 
@@ -55,6 +55,7 @@ export default {
   props: {},
   data() {
     return {
+      hasHandleType: false, // 点击"教教我"
       showPopup: false,
       garbageImg: '',
       garbageType: [
@@ -180,12 +181,16 @@ export default {
       });
     },
     handleType() {
+      this.hasHandleType = true;
       this.showPopup = false;
       uni.navigateTo({
         url: `/pages/discriminate/manual-classification/manual-classification?imgUrl=${this.garbageImg}`
       });
     },
     closePopup() {
+      if (this.hasHandleType) {
+        return;
+      }
       uni.redirectTo({
         url: `/pages/discriminate/my-card/my-card`
       });
